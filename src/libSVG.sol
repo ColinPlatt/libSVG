@@ -31,8 +31,18 @@ library libSVG {
         return string(abi.encodePacked(parts[0], parts[1], parts[2]));
     }
 
-    function style(string memory _name) internal pure returns (string memory) {
-        
+    function style(string memory _name, string memory _styleList) internal pure returns (string memory) {
+        string[4] memory parts;
+
+        parts[0] = '<style>.';
+
+        parts[1] = _name;
+
+        parts[2] = _styleList;
+
+        parts[3] = '</style>';
+
+        return string(abi.encodePacked(parts[0], parts[1], parts[2], parts[3]));
     }
 
     function text(string memory _text, uint256 x, uint256 y, string memory _attributes) internal pure returns (string memory) {
@@ -144,6 +154,28 @@ library libSVG {
 
     }
 
+    // shouldn't be used directly, should use attributeList functions to wrap it properly
+    function _attributeEntry(string memory _attribute, string memory _value) internal pure returns (string memory) {
+        return string(abi.encodePacked(_attribute, ": ", _value));
+    }
+
+    function attributeList(string memory _attributes, string memory _values) internal pure returns (string memory) {
+        return string(abi.encodePacked(" {", _attributeEntry(_attributes, _values), " }"));
+    }
+
+    function attributeList(string[] memory _attributes, string[] memory _values) internal pure returns (string memory) {
+        require(_attributes.length == _values.length, "libSVG: Unbalanced Arrays");
+
+        uint256 len = _attributes.length;
+
+        string memory results = " {";
+
+        for (uint256 i = 0; i<len; i++) {
+            results = string(abi.encodePacked(results, _attributeEntry(_attributes[i], _values[i]), "; "));
+        }
+
+        return string(abi.encodePacked(results, "}"));
+    }
 
 
 
