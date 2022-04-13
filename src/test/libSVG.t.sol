@@ -46,8 +46,92 @@ contract libSVGTest is DSTest {
         
     }
 
+    function testCircle() public {
+
+        string memory attributes = string(abi.encodePacked(0.viewBox(0, 350, 350), libSVG.alignmentValues.Min.preserveAspectRatio(libSVG.alignmentValues.Min, true)));
+        
+        emit log_string(attributes.svg(
+                                        libSVG.circle(50,100,50,'')
+                                        )
+                        );
+
+    }
+
+    function testEllipse() public {
+
+        string memory attributes = string(abi.encodePacked(0.viewBox(0, 350, 350), libSVG.alignmentValues.Min.preserveAspectRatio(libSVG.alignmentValues.Min, true)));
+        
+        emit log_string(attributes.svg(
+                                        libSVG.ellipse(100,50, 100 ,50,'')
+                                        )
+                        );
+
+    }
+
+
+    function testLine() public {
+
+        string memory attributes = string(abi.encodePacked(0.viewBox(0, 350, 350), libSVG.alignmentValues.Min.preserveAspectRatio(libSVG.alignmentValues.Min, true)));
+        
+        emit log_string(attributes.svg(
+                                        'black'.line(0,80, 10 ,20,'')
+                                        )
+                        );
+
+    }
+
+    function testPolygon() public {
+
+        string memory attributes = string(abi.encodePacked(0.viewBox(0, 350, 350), libSVG.alignmentValues.Min.preserveAspectRatio(libSVG.alignmentValues.Min, true)));
+        
+        uint256[2][] memory pointList = new uint256[2][](4);
+
+        pointList[0][0] = uint256(0);
+        pointList[0][1] = uint256(100);
+        pointList[1][0] = uint256(50);
+        pointList[1][1] = uint256(25);
+        pointList[2][0] = uint256(50);
+        pointList[2][1] = uint256(75);
+        pointList[3][0] = uint256(100);
+        pointList[3][1] = uint256(0);
+
+        emit log_string(attributes.svg(pointList.polygon('black', 'none', '')));
+
+    }
+
+    function testPolyline() public {
+
+        string memory attributes = string(abi.encodePacked(0.viewBox(0, 350, 350), libSVG.alignmentValues.Min.preserveAspectRatio(libSVG.alignmentValues.Min, true)));
+        
+        uint256[2][] memory pointList = new uint256[2][](4);
+
+        pointList[0][0] = uint256(0);
+        pointList[0][1] = uint256(100);
+        pointList[1][0] = uint256(50);
+        pointList[1][1] = uint256(25);
+        pointList[2][0] = uint256(50);
+        pointList[2][1] = uint256(75);
+        pointList[3][0] = uint256(100);
+        pointList[3][1] = uint256(0);
+
+        emit log_string(attributes.svg(pointList.polyline('black', 'none', '')));
+
+    }
+
+
+    function testRect() public {
+
+        string memory attributes = string(abi.encodePacked(0.viewBox(0, 350, 350), libSVG.alignmentValues.Min.preserveAspectRatio(libSVG.alignmentValues.Min, true)));
+        
+        emit log_string(attributes.svg(
+                                        libSVG.rect(20,15,75,50,'')
+                                        )
+                        );
+
+    }
+
     function testBasic() public {
-        string memory base = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 350 350" preserveAspectRatio="xMinYMin meet"><text x="10 y="20">test</text></svg>';
+        string memory base = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 350 350" preserveAspectRatio="xMinYMin meet"><style>.base {fill: black; font-family: serif; font-size: 14px; }</style><text x="10" y="20" class="base">test</text></svg>';
 
         emit log_string(base);
 
