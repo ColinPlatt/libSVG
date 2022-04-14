@@ -7,7 +7,7 @@ import {svg} from "../SVG.sol";
 import {utils} from "../Utils.sol";
 import {json} from "../JSON.sol";
 
-import {LootOriginal, LootLib} from "../LootURI.sol";
+import {LootOriginal, LootLib} from "./LootURI.sol";
 
 contract renderTest is DSTest {
 

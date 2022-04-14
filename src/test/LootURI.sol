@@ -1,9 +1,9 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.10;
 
-import {svg} from "./SVG.sol";
-import {json} from "./JSON.sol";
-import {utils} from "./Utils.sol";
+import {svg} from "../SVG.sol";
+import {json} from "../JSON.sol";
+import {utils} from "../Utils.sol";
 
 
 contract LootLib {
