@@ -46,12 +46,28 @@ library svg {
         return el('line', _props, _children);
     }
 
+    function circle(string memory _props)
+        internal
+        pure
+        returns (string memory)
+    {
+        return el('circle', _props);
+    }
+
     function circle(string memory _props, string memory _children)
         internal
         pure
         returns (string memory)
     {
         return el('circle', _props, _children);
+    }
+
+    function rect(string memory _props)
+        internal
+        pure
+        returns (string memory)
+    {
+        return el('rect', _props);
     }
 
     function rect(string memory _props, string memory _children)
@@ -143,6 +159,21 @@ library svg {
             );
     }
 
+    // A generic element, can be used to construct SVG (or HTML) elements without children
+    function el(
+        string memory _tag,
+        string memory _props
+    ) internal pure returns (string memory) {
+        return
+            string.concat(
+                '<',
+                _tag,
+                ' ',
+                _props,
+                '/>'
+            );
+    }
+
     // an SVG attribute
     function prop(string memory _key, string memory _val)
         internal
@@ -150,5 +181,18 @@ library svg {
         returns (string memory)
     {
         return string.concat(_key, '=', '"', _val, '" ');
+    }
+
+    function prop(string memory _key, string memory _val, bool last)
+        internal
+        pure
+        returns (string memory)
+    {
+        if (last) {
+            return string.concat(_key, '=', '"', _val, '"');
+        } else {
+            return string.concat(_key, '=', '"', _val, '" ');
+        }
+        
     }
 }

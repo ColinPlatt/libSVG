@@ -19,9 +19,7 @@ library json {
                     string.concat(
                     '{',
                     _prop('name', name),
-                    ', ',
                     _prop('description', description),
-                    ', ',
                     _xmlImage(svgImg),
                     '}'
                     )
@@ -38,9 +36,10 @@ library json {
         return _prop(
                         'image',
                         string.concat(
-                            'data:image/svg+xlm;base64,',
+                            'data:image/svg+xml;base64,',
                             encode(bytes(_svgImg))
-                        )    
+                        ),
+                        true
         );
     }
 
@@ -50,7 +49,20 @@ library json {
         pure
         returns (string memory)
     {
-        return string.concat('"', _key, '": ', '"', _val, '" ');
+        return string.concat('"', _key, '": ', '"', _val, '", ');
+    }
+
+    function _prop(string memory _key, string memory _val, bool last)
+        internal
+        pure
+        returns (string memory)
+    {
+        if(last) {
+            return string.concat('"', _key, '": ', '"', _val, '"');
+        } else {
+            return string.concat('"', _key, '": ', '"', _val, '", ');
+        }
+        
     }
 
     function _object(string memory _key, string memory _val)
