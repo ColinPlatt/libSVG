@@ -1,0 +1,41 @@
+// SPDX-License-Identifier: UNLICENSED
+pragma solidity ^0.8.10;
+
+import "ds-test/test.sol";
+
+contract concatTest {
+
+    function setUp() public {}
+
+    function testGasConcat() public pure returns (string memory) {
+            string memory output = string.concat(
+                'rgba(',
+                '4',
+                ',',
+                '152',
+                ',',
+                '48',
+                ',',
+                '45',
+                ')'
+            );
+
+            return output;
+    }
+
+    function testGasAbi() public pure returns (string memory) {
+        string memory output = string(abi.encodePacked(
+            'rgba(',
+            '4',
+            ',',
+            '152',
+            ',',
+            '48',
+            ',',
+            '45',
+            ')'
+        ));
+
+        return output;
+    }
+}

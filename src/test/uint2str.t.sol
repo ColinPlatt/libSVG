@@ -1,0 +1,29 @@
+// SPDX-License-Identifier: UNLICENSED
+pragma solidity ^0.8.10;
+
+import "ds-test/test.sol";
+import {utils} from "../Utils.sol";
+
+contract uint2strTest is DSTest {
+    using utils for uint256;
+
+
+    function setUp() public {}
+
+    function testOZ() public returns (string memory) {
+
+            uint256 testValue = 123456789;
+
+            string memory output;
+            
+            for (uint256 i = 1; i<10; i++) {
+                emit log_string(testValue.toString(i));
+            }
+
+            return output;
+    }
+
+    event log_byte1(bytes1 val);
+
+    
+}
