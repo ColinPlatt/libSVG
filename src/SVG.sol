@@ -22,6 +22,14 @@ library svg {
         return el('path', _props, _children);
     }
 
+    function _svg(string memory _props, string memory _children)
+        internal 
+        pure
+        returns (string memory)
+    {
+        return el('svg', _props, _children);
+    }
+
     function text(string memory _props, string memory _children)
         internal
         pure

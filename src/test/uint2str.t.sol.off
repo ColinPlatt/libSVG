@@ -22,8 +22,5 @@ contract uint2strTest is DSTest {
 
             return output;
     }
-
-    event log_byte1(bytes1 val);
-
     
 }
