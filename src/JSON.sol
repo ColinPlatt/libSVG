@@ -4,6 +4,13 @@ pragma solidity ^0.8.12;
 // JSON utilities for base64 encoded ERC721 JSON metadata scheme
 library json {
     
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    /// @dev JSON requires that double quotes be escaped or JSONs will not build correctly
+    /// string.concat also requires an escape, use \\" or the constant DOUBLE_QUOTES to represent " in JSON
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    string constant DOUBLE_QUOTES = '\\"';
+
     function formattedMetadata(
         string memory name,
         string memory description,
@@ -42,7 +49,6 @@ library json {
                         true
         );
     }
-
 
     function _prop(string memory _key, string memory _val)
         internal

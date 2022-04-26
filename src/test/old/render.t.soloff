@@ -27,11 +27,18 @@ contract renderTest is DSTest {
     function testJSON() public returns (string memory output){
         string memory rawSVG = renderSVG(1);
 
-        output = json.formattedMetadata("test","test description",rawSVG);
+        output = json.formattedMetadata('\\"test',string.concat(json.DOUBLE_QUOTES, 'test description', json.DOUBLE_QUOTES),rawSVG);
 
         emit log_string(output);
 
+    }
 
+    function testEscape() public {
+        string memory output;
+
+        output = json._prop('\\"test', string.concat(json.DOUBLE_QUOTES, 'test description', json.DOUBLE_QUOTES));
+        
+        emit log_string(output);
     }
 
     function render(uint256 _tokenId) public pure returns (string memory) {
