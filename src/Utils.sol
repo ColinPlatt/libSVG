@@ -67,6 +67,105 @@ library utils {
             );
     }
 
+    function cssBraces(
+        string memory _attribute, 
+        string memory _value
+    )   internal
+        pure
+        returns (string memory)
+    {
+        return string.concat(
+            ' {',
+            _attribute,
+            ': ',
+            _value,
+            '}'
+        );
+    }
+
+    function cssBraces(
+        string[] memory _attributes, 
+        string[] memory _values
+    )   internal
+        pure
+        returns (string memory)
+    {
+        require(_attributes.length == _values.length, "Utils: Unbalanced Arrays");
+        
+        uint256 len = _attributes.length;
+
+        string memory results = ' {';
+
+        for (uint256 i = 0; i<len; i++) {
+            results = string.concat(
+                                    results, 
+                                    _attributes[i],
+                                    ': ',
+                                    _values[i],
+                                     '; '
+                                    );
+                                    
+        }
+
+        return string.concat(results, '}');
+    }
+
+    //deals with integers (i.e. no decimals)
+    function points(uint256[2][] memory pointsArray) internal pure returns (string memory) {
+        require(pointsArray.length >= 3, "Utils: Array too short");
+
+        uint256 len = pointsArray.length-1;
+
+
+        string memory results = 'points="';
+
+        for (uint256 i=0; i<len; i++){
+            results = string.concat(
+                                    results, 
+                                    toString(pointsArray[i][0]), 
+                                    ',', 
+                                    toString(pointsArray[i][1]),
+                                    ' '
+                                    );
+        }
+
+        return string.concat(
+                            results, 
+                            toString(pointsArray[len][0]), 
+                            ',', 
+                            toString(pointsArray[len][1]),
+                            '"'
+                            );
+    }
+
+    // allows for a uniform precision to be applied to all points 
+    function points(uint256[2][] memory pointsArray, uint256 decimalPrecision) internal pure returns (string memory) {
+        require(pointsArray.length >= 3, "Utils: Array too short");
+
+        uint256 len = pointsArray.length-1;
+
+
+        string memory results = 'points="';
+
+        for (uint256 i=0; i<len; i++){
+            results = string.concat(
+                                    results, 
+                                    toString(pointsArray[i][0], decimalPrecision), 
+                                    ',', 
+                                    toString(pointsArray[i][1], decimalPrecision),
+                                    ' '
+                                    );
+        }
+
+        return string.concat(
+                            results, 
+                            toString(pointsArray[len][0], decimalPrecision), 
+                            ',', 
+                            toString(pointsArray[len][1], decimalPrecision),
+                            '"'
+                            );
+    }
+
     // checks if two strings are equal
     function stringsEqual(string memory _a, string memory _b)
         internal

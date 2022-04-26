@@ -2,9 +2,17 @@
 pragma solidity ^0.8.12;
 import {utils} from './Utils.sol';
 
-// Core SVG utilitiy library which helps us construct
+// Core SVG utility library which helps us construct
 // onchain SVG's with a simple, web-like API.
 library svg {
+
+    /* GLOBAL CONSTANTS */
+    string internal constant _SVG = 'xmlns="http://www.w3.org/2000/svg"';
+    string internal constant _HTML = 'xmlns="http://www.w3.org/1999/xhtml"';
+    string internal constant _XMLNS = 'http://www.w3.org/2000/xmlns/ ';
+    string internal constant _XLINK = 'http://www.w3.org/1999/xlink ';
+
+    
     /* MAIN ELEMENTS */
     function g(string memory _props, string memory _children)
         internal
@@ -14,20 +22,61 @@ library svg {
         return el('g', _props, _children);
     }
 
-    function path(string memory _props, string memory _children)
-        internal
-        pure
-        returns (string memory)
-    {
-        return el('path', _props, _children);
-    }
-
     function _svg(string memory _props, string memory _children)
         internal 
         pure
         returns (string memory)
     {
-        return el('svg', _props, _children);
+        return el('svg', string.concat(_SVG, ' ', _props), _children);
+    }
+
+    function style(string memory _title, string memory _props)
+        internal
+        pure
+        returns (string memory)
+    {
+        return el('style', 
+            string.concat(
+                '.', 
+                _title, 
+                ' ', 
+                _props)
+            );
+    }
+
+    function path(string memory _d)
+        internal
+        pure
+        returns (string memory)
+    {
+        return el('path', prop('d', _d, true));
+    }
+
+    function path(string memory _d, string memory _props)
+        internal
+        pure
+        returns (string memory)
+    {
+        return el('path', string.concat(
+                                        prop('d', _d),
+                                        _props
+                                        )
+                );
+    }
+
+        function path(string memory _d, string memory _props, string memory _children)
+        internal
+        pure
+        returns (string memory)
+    {
+        return el(
+                'path', 
+                string.concat(
+                            prop('d', _d),
+                            _props
+                            ),
+                _children
+                );
     }
 
     function text(string memory _props, string memory _children)
@@ -36,6 +85,14 @@ library svg {
         returns (string memory)
     {
         return el('text', _props, _children);
+    }
+
+    function line(string memory _props)
+        internal
+        pure
+        returns (string memory)
+    {
+        return el('line', _props);
     }
 
     function line(string memory _props, string memory _children)
@@ -60,6 +117,102 @@ library svg {
         returns (string memory)
     {
         return el('circle', _props, _children);
+    }
+
+    function circle(string memory cx, string memory cy, string memory r)
+        internal
+        pure
+        returns (string memory)
+    {
+        
+        return el('circle', 
+                string.concat(
+                    prop('cx', cx),
+                    prop('cy', cy),
+                    prop('r', r, true)
+                )
+        );
+    }
+
+    function circle(string memory cx, string memory cy, string memory r, string memory _children)
+        internal
+        pure
+        returns (string memory)
+    {
+        
+        return el('circle', 
+                string.concat(
+                    prop('cx', cx),
+                    prop('cy', cy),
+                    prop('r', r, true)
+                ),
+                _children   
+        );
+    }
+
+    function circle(string memory cx, string memory cy, string memory r, string memory _props, string memory _children)
+        internal
+        pure
+        returns (string memory)
+    {
+        
+        return el('circle', 
+                string.concat(
+                    prop('cx', cx),
+                    prop('cy', cy),
+                    prop('r', r),
+                    _props
+                ),
+                _children   
+        );
+    }
+
+    function ellipse(string memory _props)
+        internal
+        pure
+        returns (string memory)
+    {
+        return el('ellipse', _props);
+    }
+
+    function ellipse(string memory _props, string memory _children)
+        internal
+        pure
+        returns (string memory)
+    {
+        return el('ellipse', _props, _children);
+    }
+
+    function polygon(string memory _props)
+        internal
+        pure
+        returns (string memory)
+    {
+        return el('polygon', _props);
+    }
+
+    function polygon(string memory _props, string memory _children)
+        internal
+        pure
+        returns (string memory)
+    {
+        return el('polygon', _props, _children);
+    }
+
+    function polyline(string memory _props)
+        internal
+        pure
+        returns (string memory)
+    {
+        return el('polyline', _props);
+    }
+
+    function polyline(string memory _props, string memory _children)
+        internal
+        pure
+        returns (string memory)
+    {
+        return el('polyline', _props, _children);
     }
 
     function rect(string memory _props)
@@ -130,12 +283,21 @@ library svg {
             );
     }
 
+    /* ANIMATION */
     function animateTransform(string memory _props)
         internal
         pure
         returns (string memory)
     {
-        return el('animateTransform', _props, utils.NULL);
+        return el('animateTransform', _props);
+    }
+
+    function animate(string memory _props)
+        internal
+        pure
+        returns (string memory)
+    {
+        return el('animate', _props);
     }
 
     /* COMMON */
@@ -195,4 +357,5 @@ library svg {
         }
         
     }
+
 }

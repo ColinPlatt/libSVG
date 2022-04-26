@@ -1,0 +1,52 @@
+// SPDX-License-Identifier: UNLICENSED
+pragma solidity 0.8.12;
+
+import "ds-test/test.sol";
+
+import {svg} from "../SVG.sol";
+import {utils} from "../Utils.sol";
+//import {json} from "../JSON.sol";
+
+contract testProp is DSTest{
+
+    function setUp() public {}
+
+    function testCircleOriginal() public logs_gas {
+        
+        emit log_string(
+            svg._svg(
+                string.concat(
+                    svg.prop('xmlns', 'http://www.w3.org/2000/svg'),
+                    svg.prop('width', '300'),
+                    svg.prop('height', '300'),
+                    svg.prop('style', 'background:#000')
+                ),
+                svg.circle(
+                    string.concat(
+                        svg.prop('cx', '100'),
+                        svg.prop('cy', '50'),
+                        svg.prop('r', '25'),
+                        svg.prop('fill', 'red', true)
+                    )
+                )
+            )
+        );
+    }
+
+    function testCircleForced() public logs_gas {
+        
+        emit log_string(
+            svg._svg(
+                string.concat(
+                    svg.prop('xmlns', 'http://www.w3.org/2000/svg'),
+                    svg.prop('width', '300'),
+                    svg.prop('height', '300'),
+                    svg.prop('style', 'background:#000')
+                ),
+                svg.circle('100', '50', '25', '')
+            )
+        );
+    }
+
+
+}
