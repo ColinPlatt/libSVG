@@ -1,2 +1,4 @@
-openzeppelin-contracts/=lib/openzeppelin-contracts/
+Solady/=lib/Solady/src/
 ds-test/=lib/ds-test/src/
+forge-std/=lib/Solady/test/utils/forge-std/
+openzeppelin-contracts/=lib/openzeppelin-contracts/
